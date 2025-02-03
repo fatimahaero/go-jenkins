@@ -8,7 +8,7 @@ pipeline {
             steps {
                 script {
                     // Menjalankan Docker Build, pastikan Docker socket bisa diakses
-                    sh "docker build -t go-jenkins ."
+                    sh "sudo docker build -t go-jenkins ."
                 }
             }
         }
