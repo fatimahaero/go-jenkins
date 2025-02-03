@@ -1,10 +1,13 @@
 pipeline {
     agent any
+    environment {
+        DOCKER_SOCKET = "/var/run/docker.sock" // Lokasi Docker socket
+    }
     stages {
         stage('Build') {
             steps {
                 script {
-                    // Menggunakan docker untuk build image
+                    // Menjalankan Docker Build, pastikan Docker socket bisa diakses
                     sh "docker build -t go-jenkins ."
                 }
             }
@@ -12,7 +15,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    // Menjalankan container untuk test
+                    // Menjalankan Docker container untuk test
                     sh "docker run go-jenkins go test -v ./..."
                 }
             }
@@ -20,7 +23,7 @@ pipeline {
         stage('Deploy') {
             steps {
                 script {
-                    // Menjalankan container untuk deploy
+                    // Menjalankan Docker container untuk deploy
                     sh "docker run -d --name go-jenkins-app go-jenkins"
                 }
             }
